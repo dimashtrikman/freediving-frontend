@@ -1,0 +1,8 @@
+#main folder with project files, not include any code
+/project
+
+# production
+/build
+
+# dependencies
+/node_modules
