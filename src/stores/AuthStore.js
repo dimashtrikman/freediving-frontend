@@ -1,4 +1,5 @@
-import { makeAutoObservable } from 'mobx';
+import { makeAutoObservable, runInAction } from "mobx";
+import axios from "axios";
 
 class AuthStore {
   user = null;
@@ -59,6 +60,27 @@ class AuthStore {
     }
   }
 
+  async resetPassword(email) {
+    this.isLoading = true;
+    this.error = "";
+    try {
+      const response = await axios.post('/api/auth/reset-password', { email });
+      runInAction(() => {
+        if (response.status === 200) {
+          this.isLoading = false;
+        } else {
+          this.error = 'Something went wrong. Please try again.';
+          this.isLoading = false;
+        }
+      });
+    } catch (err) {
+      runInAction(() => {
+        this.error = err.response?.data?.message || 'Server error. Please try again later.';
+        this.isLoading = false;
+      });
+    }
+  }
+
   logout() {
     localStorage.removeItem('token');
     this.user = null;
@@ -66,4 +88,8 @@ class AuthStore {
   }
 }
 
-export default new AuthStore();
+
+
+const authStore = new AuthStore();
+
+export default authStore;

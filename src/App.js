@@ -13,6 +13,9 @@ import {MarketingPage} from './pages/Marketing/MarketingPage';
 import {StaticApneaApp} from './pages/StaticApnea/StaticApneaApp';
 import {PaymentPage} from './pages/Payment/PaymentPage';
 import {NotFoundPage} from './pages/NotFoundPage';
+import ResetPasswordPage from './pages/Auth/ResetPasswordPage';
+import PrivateRoute from './components/PrivateRoute';
+
 
 function App() {
   return (
@@ -21,8 +24,16 @@ function App() {
         <Route path="/" element={<HomePage />} />        
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/reset-password" element={<ResetPasswordPage />} />
         <Route path="/demo" element={<DemoAccessPage />} />
-        <Route path="/dashboard" element={<DashboardPage />} />
+        <Route
+          path="/dashboard"
+          element={
+            <PrivateRoute>
+              <DashboardPage />
+            </PrivateRoute>
+          }
+        />
         <Route path="/lessons" element={<LessonsPage />} />
         <Route path="/lesson/:id" element={<LessonPage />} />
         <Route path="/quiz/:id" element={<QuizPage />} />

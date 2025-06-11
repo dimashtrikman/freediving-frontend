@@ -1,81 +1,79 @@
-import { useState } from 'react';
-import { API_URL } from '../../utils/global';
+import React, { useState } from 'react';
+import { observer } from 'mobx-react-lite';
+import { useNavigate } from 'react-router-dom';
+import AuthStore from '../../stores/AuthStore';
+import { Link } from 'react-router-dom';
 
-export const RegisterPage = () => {
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-    confirmPassword: '',
-  });
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
-
-  const handleChange = (e) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
-  };
+export const RegisterPage = observer(() => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
-    setSuccess('');
 
-    if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match');
+    if (password !== confirmPassword) {
+      AuthStore.error = 'Passwords do not match';
       return;
     }
 
-    try {
-      const response = await fetch(API_URL + '/account', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email: formData.email,
-          password: formData.password,
-        }),
-      });
-
-      if (!response.ok) {
-        const data = await response.json();
-        throw new Error(data.message || 'Registration failed');
-      }
-
-      setSuccess('Registration successful! You can now log in.');
-    } catch (err) {
-      setError(err.message);
+    await AuthStore.register(email, password);
+    if (!AuthStore.error) {
+      navigate('/login');
     }
   };
 
-
-    return (
-    <>
+  return (
     <div className="register-container">
       <h2>Create an Account</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label>Email</label>
-          <input type="email" name="email" required value={formData.email} onChange={handleChange} />
+          <input
+            type="email"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
         </div>
+
         <div className="form-group">
           <label>Password</label>
-          <input type="password" name="password" required value={formData.password} onChange={handleChange} />
+          <input
+            type="password"
+            required
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
         </div>
+
         <div className="form-group">
           <label>Confirm Password</label>
-          <input type="password" name="confirmPassword" required value={formData.confirmPassword} onChange={handleChange} />
+          <input
+            type="password"
+            required
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+          />
         </div>
-        <button type="submit" className="register-button">Sign Up</button>
+
+        <button type="submit" className="register-button" disabled={AuthStore.isLoading}>
+          {AuthStore.isLoading ? 'Registering...' : 'Sign Up'}
+        </button>
+
+        {AuthStore.error && <p style={{ color: 'red' }}>{AuthStore.error}</p>}
       </form>
-      {error && <p style={{ color: 'red', marginTop: '1rem' }}>{error}</p>}
-      {success && <p style={{ color: 'green', marginTop: '1rem' }}>{success}</p>}
+
       <div className="login-link">
         Already have an account? <a href="/login">Login</a>
       </div>
+      <div className="forgot-password">
+        <Link to="/reset-password">Forgot your password?</Link>
+      </div>
     </div>
-    </>
-    )
-}
+
+  );
+});
 
 export default RegisterPage;

@@ -1,68 +1,43 @@
-import { useState } from 'react';
-import { API_URL } from '../../utils/global';
+import React, { useState } from 'react';
+import { observer } from 'mobx-react-lite';
+import AuthStore from '../../stores/AuthStore';
+import { useNavigate, Link } from 'react-router-dom';
 
-
-
-export const LoginPage = () => {
-  const [formData, setFormData] = useState({ email: '', password: '' });
-  const [error, setError] = useState('');
-
-  const handleChange = (e) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
-  };
+export const LoginPage = observer(() => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
-
-    try {
-      const response = await fetch(API_URL + '/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || 'Login failed');
-      }
-
-      // Save token, Ex: in localStorage
-      localStorage.setItem('token', data.token);
-      // Redirect, Ex: to dashboard
-      window.location.href = '/dashboard';
-    } catch (err) {
-      setError(err.message);
-    }
+    await AuthStore.login(email, password);
+    if (AuthStore.isAuth) navigate('/dashboard');
   };
 
-
-    return (
-    <>
-    <div class="auth-container">
-      <h2>Sign In to Your Account</h2>
+  return (
+    <div className="register-container">
+      <h2>Sign In</h2>
       <form onSubmit={handleSubmit}>
-        <div class="form-group">
-          <label>Email</label>
-          <input type="email" name="email" required value={formData.email} onChange={handleChange} />
+        <div className="form-group">
+          <input type="email" placeholder="Email" value={email}
+                onChange={(e) => setEmail(e.target.value)} required />
         </div>
-        <div class="form-group">
-          <label>Password</label>
-          <input type="password" name="password" required value={formData.password} onChange={handleChange} />
+        <div className="form-group">
+          <input type="password" placeholder="Password" value={password}
+                onChange={(e) => setPassword(e.target.value)} required />
         </div>
-        <button type="submit" class="auth-button">Sign In</button>
+
+        <button type="submit" className="auth-button">Login</button>
       </form>
-      {error && <p style={{ color: 'red', marginTop: '1rem' }}>{error}</p>}
-      <div class="register-link">
+      {AuthStore.error && <p style={{ color: 'red' }}>{AuthStore.error}</p>}
+      <div className="login-link">
         Don't have an account? <a href="/register">Register</a>
       </div>
+      <div className="forgot-password">
+        <Link to="/reset-password">Forgot your password?</Link>
+      </div>
     </div>
-    </>
-    )
-}
+  );
+});
 
 export default LoginPage;

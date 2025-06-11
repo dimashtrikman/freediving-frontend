@@ -176,3 +176,38 @@ h1 {
 .login-link a:hover {
   text-decoration: underline;
 }
+
+  /* ----------------------------------------------------------------------- */
+  /* ResetPasswordPage */
+
+.reset-container {
+  max-width: 320px;
+  margin: 100px auto;
+  padding: 2rem;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.reset-button {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #a72839;
+  color: white;
+  border: none;
+  border-radius: 4px;
+}
+
+.back-link {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.forgot-password {
+  margin-top: 1rem;
+  text-align: center;
+}
