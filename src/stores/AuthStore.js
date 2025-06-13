@@ -29,7 +29,7 @@ class AuthStore {
       if (!response.ok) throw new Error(data.message || 'Login failed');
 
       localStorage.setItem('token', data.token);
-      this.user = data.user || { email }; // Предположим, backend возвращает user
+      this.user = data.user || { email }; // Server return {user}
       this.isAuth = true;
     } catch (err) {
       this.error = err.message;

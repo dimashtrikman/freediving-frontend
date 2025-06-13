@@ -66,7 +66,7 @@ export const RegisterPage = observer(() => {
       </form>
 
       <div className="login-link">
-        Already have an account? <a href="/login">Login</a>
+        Already have an account? <Link to="/login">Login</Link>
       </div>
       <div className="forgot-password">
         <Link to="/reset-password">Forgot your password?</Link>

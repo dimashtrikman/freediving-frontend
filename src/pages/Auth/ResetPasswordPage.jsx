@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { observer } from "mobx-react-lite";
 import AuthStore from "../../stores/AuthStore";
+import { Link } from 'react-router-dom';
 
 const ResetPasswordPage = observer(() => {
   const [email, setEmail] = useState("");
@@ -42,7 +43,8 @@ const ResetPasswordPage = observer(() => {
       )}
 
       <div className="back-link">
-        Remembered your password? <a href="/login">Login</a>
+        Remembered your password? <Link to="/login">Login</Link>
+        
       </div>
     </div>
   );

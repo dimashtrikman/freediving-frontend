@@ -31,7 +31,7 @@ export const LoginPage = observer(() => {
       </form>
       {AuthStore.error && <p style={{ color: 'red' }}>{AuthStore.error}</p>}
       <div className="login-link">
-        Don't have an account? <a href="/register">Register</a>
+        Don't have an account? <Link to="/register">Register</Link>
       </div>
       <div className="forgot-password">
         <Link to="/reset-password">Forgot your password?</Link>
