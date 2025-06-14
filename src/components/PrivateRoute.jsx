@@ -11,12 +11,16 @@ const PrivateRoute = observer(({ children }) => {
     }
   }, []);
 
-    if (AuthStore.isLoading || !AuthStore.isChecked) {
+  if (AuthStore.isLoading || !AuthStore.isChecked) {
     // While checking authentication, show a loader or placeholderу
     return <div>Loading...</div>; 
   }
 
-  return AuthStore.isAuth ? children : <Navigate to="/login" replace/>;
+  if (AuthStore.isAuth) {
+    return children;
+  }
+
+  return <Navigate to="/login" replace />;
 });
 
 export default PrivateRoute;

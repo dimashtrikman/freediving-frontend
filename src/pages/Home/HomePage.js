@@ -4,6 +4,7 @@ import logo from '../../assets/molchanovs_logo.png';
 import Header from '../../components/Header'; 
 
 export const HomePage = () => {
+  
     return (
     <>
      <Header />

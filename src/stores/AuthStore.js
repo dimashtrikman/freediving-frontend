@@ -17,23 +17,28 @@ class AuthStore {
     }
   }
 
-  async checkAuth() {
-    this.isLoading = true;
-    try {
-      // например, проверка токена
-      const response = await fetch('/api/auth/check', { credentials: 'include' });
-      if (response.ok) {
-        this.isAuth = true;
-      } else {
-        this.isAuth = false;
-      }
-    } catch (e) {
+  clearError() {
+  this.error = null;
+}
+
+async checkAuth() {
+  this.isLoading = true;
+  try {
+    const response = await fetch('/api/auth/check', { credentials: 'include' });
+    if (response.ok) {
+      const data = await response.json();
+      this.isAuth = data.isAuth === true;
+    } else {
       this.isAuth = false;
-    } finally {
-      this.isLoading = false;
-      this.isChecked = true;
     }
+  } catch (e) {
+    this.isAuth = false;
+  } finally {
+    this.isLoading = false;
+    this.isChecked = true;
   }
+}
+
 
   async login(email, password) {
     this.isLoading = true;
