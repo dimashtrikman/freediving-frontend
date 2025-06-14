@@ -1,5 +1,6 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import axios from "axios";
+const API_URL = process.env.REACT_APP_SERVER_API_URL;
 
 class AuthStore {
   user = null;
@@ -19,7 +20,7 @@ class AuthStore {
     this.isLoading = true;
     this.error = '';
     try {
-      const response = await fetch('https://api.example.com/auth/login', {
+      const response = await fetch(`${API_URL}/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
@@ -43,7 +44,7 @@ class AuthStore {
     this.isLoading = true;
     this.error = '';
     try {
-      const response = await fetch('https://api.example.com/auth/register', {
+      const response = await fetch(`${API_URL}/auth/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
@@ -64,7 +65,7 @@ class AuthStore {
     this.isLoading = true;
     this.error = "";
     try {
-      const response = await axios.post('/api/auth/reset-password', { email });
+      const response = await axios.put(`${API_URL}/user/${email}/password`);
       runInAction(() => {
         if (response.status === 200) {
           this.isLoading = false;
