@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { observer } from "mobx-react-lite";
 import AuthStore from "../../stores/AuthStore";
 import { Link } from 'react-router-dom';
+import Header from '../../components/Header'; 
 
 const ResetPasswordPage = observer(() => {
   const [email, setEmail] = useState("");
@@ -16,6 +17,8 @@ const ResetPasswordPage = observer(() => {
   };
 
   return (
+    <>
+    <Header />
     <div className="reset-container">
       <h2>Reset Password</h2>
 
@@ -47,6 +50,7 @@ const ResetPasswordPage = observer(() => {
         
       </div>
     </div>
+    </>
   );
 });
 

@@ -6,6 +6,7 @@ class AuthStore {
   user = null;
   isAuth = false;
   isLoading = false;
+  isChecked = false; 
   error = '';
 
   constructor() {
@@ -13,6 +14,24 @@ class AuthStore {
     const token = localStorage.getItem('token');
     if (token) {
       this.isAuth = true;
+    }
+  }
+
+  async checkAuth() {
+    this.isLoading = true;
+    try {
+      // например, проверка токена
+      const response = await fetch('/api/auth/check', { credentials: 'include' });
+      if (response.ok) {
+        this.isAuth = true;
+      } else {
+        this.isAuth = false;
+      }
+    } catch (e) {
+      this.isAuth = false;
+    } finally {
+      this.isLoading = false;
+      this.isChecked = true;
     }
   }
 
