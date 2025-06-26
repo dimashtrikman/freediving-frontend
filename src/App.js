@@ -43,6 +43,14 @@ function App() {
             </PrivateRoute>
           }
         />
+        <Route
+          path="/payment"
+          element={
+           <PrivateRoute>
+              <PaymentPage />
+           </PrivateRoute>
+          }
+        />
         <Route path="/lessons" element={<LessonsPage />} />
         <Route path="/lesson/:id" element={<LessonPage />} />
         <Route path="/quiz/:id" element={<QuizPage />} />
