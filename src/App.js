@@ -1,5 +1,7 @@
 import './App.css';
-import { Route, Routes } from 'react-router-dom';
+import { useEffect } from 'react';
+import AuthStore from './stores/AuthStore';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import { HomePage } from './pages/Home/HomePage';
 import {LoginPage} from './pages/Auth/LoginPage';
 import {RegisterPage} from './pages/Auth/RegisterPage';
@@ -18,6 +20,13 @@ import PrivateRoute from './components/PrivateRoute';
 
 
 function App() {
+  const location = useLocation();
+
+  useEffect(() => {
+    // Clear auth error on route change
+    AuthStore.clearError();
+  }, [location.pathname]);
+
   return (
     <div className="App">
       <Routes>
@@ -32,6 +41,14 @@ function App() {
             <PrivateRoute>
               <DashboardPage />
             </PrivateRoute>
+          }
+        />
+        <Route
+          path="/payment"
+          element={
+           <PrivateRoute>
+              <PaymentPage />
+           </PrivateRoute>
           }
         />
         <Route path="/lessons" element={<LessonsPage />} />

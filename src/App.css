@@ -9,7 +9,6 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  margin: 0;
 }
 
 h1 {
@@ -23,14 +22,13 @@ h1 {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 40px;
   text-align: center;
   background-color: #f9f9f9;
   min-height: 100vh;
 }
 
 .home-header {
-  max-width: 600px;
+  max-width: 800px;
 }
 
 .home-logo {
@@ -211,3 +209,76 @@ h1 {
   margin-top: 1rem;
   text-align: center;
 }
+
+  /* ----------------------------------------------------------------------- */
+  /* Header */
+
+.header {
+  position: fixed;        
+  top: 0;                  
+  left: 0;                 
+  right: 0;               
+  padding: 1rem;
+  background-color: dodgerblue;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  z-index: 1000;           
+}
+
+.header-link {
+  text-decoration: none;
+  color: #ffffff;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+  /* ----------------------------------------------------------------------- */
+  /* PaymentPage */
+
+.payment-container {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 20px;
+  text-align: center;
+  font-family: sans-serif;
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.payment-title {
+  font-size: 2rem;
+  margin-bottom: 12px;
+}
+
+.payment-description {
+  font-size: 1.1rem;
+  color: #555;
+}
+
+.payment-price {
+  font-size: 1.3rem;
+  margin: 20px 0;
+}
+
+.payment-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.payment-cart-button {
+  margin-left: 20px;
+}
+
+/* ----------------------------------------------------------------------- /
+/ PaypalCheckoutButton */
+
+.paypal-button-container {
+  display: inline-block;
+  margin-top: 20px;
+}
+
+
+

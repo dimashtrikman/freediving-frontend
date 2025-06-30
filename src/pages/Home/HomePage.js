@@ -1,10 +1,13 @@
 
 import { NavLink } from 'react-router-dom';
 import logo from '../../assets/molchanovs_logo.png';
+import Header from '../../components/Header'; 
 
 export const HomePage = () => {
+  
     return (
     <>
+     <Header />
     <div className="home-container">
       <header className="home-header">
         <img src={logo} alt="Логотип платформы" className="home-logo" />

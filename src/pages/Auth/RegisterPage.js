@@ -3,6 +3,7 @@ import { observer } from 'mobx-react-lite';
 import { useNavigate } from 'react-router-dom';
 import AuthStore from '../../stores/AuthStore';
 import { Link } from 'react-router-dom';
+import Header from '../../components/Header'; 
 
 export const RegisterPage = observer(() => {
   const [email, setEmail] = useState('');
@@ -25,6 +26,8 @@ export const RegisterPage = observer(() => {
   };
 
   return (
+    <>
+    <Header />
     <div className="register-container">
       <h2>Create an Account</h2>
       <form onSubmit={handleSubmit}>
@@ -72,7 +75,7 @@ export const RegisterPage = observer(() => {
         <Link to="/reset-password">Forgot your password?</Link>
       </div>
     </div>
-
+    </>
   );
 });
 
