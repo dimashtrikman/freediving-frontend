@@ -39,6 +39,9 @@ export const LoginPage = observer(() => {
       <div className="forgot-password">
         <Link to="/reset-password">Forgot your password?</Link>
       </div>
+      <div className="back-home-link" style={{ marginTop: 16 }}>
+        <Link to="/">&#8592; Back to Home</Link>
+      </div>
     </div>
     </>
   );
