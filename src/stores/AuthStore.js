@@ -89,13 +89,13 @@ async checkAuth() {
     this.isLoading = true;
     this.error = "";
     try {
-      const response = await axios.put(`${API_URL}/account/recovery/${email}`,
+      const response = await axios.get(`${API_URL}/account/recovery/${email}`,
         {
             headers: { 'Content-Type': 'application/json' }
         }
       );
       runInAction(() => {
-        if (response.status === 200) {
+        if (response.status >= 200 && response.status < 300) {
           this.isLoading = false;
         } else {
           this.error = 'Something went wrong. Please try again.';
