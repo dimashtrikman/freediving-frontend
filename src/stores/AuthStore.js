@@ -24,7 +24,7 @@ class AuthStore {
 async checkAuth() {
   this.isLoading = true;
   try {
-    const response = await fetch('/api/account/check', { credentials: 'include' });
+    const response = await fetch('/account/check', { credentials: 'include' });
     if (response.ok) {
       const data = await response.json();
       this.isAuth = data.isAuth === true;
@@ -89,7 +89,11 @@ async checkAuth() {
     this.isLoading = true;
     this.error = "";
     try {
-      const response = await axios.put(`${API_URL}/account/recovery/${email}`);
+      const response = await axios.put(`${API_URL}/account/recovery/${email}`,
+        {
+            headers: { 'Content-Type': 'application/json' }
+        }
+      );
       runInAction(() => {
         if (response.status === 200) {
           this.isLoading = false;
