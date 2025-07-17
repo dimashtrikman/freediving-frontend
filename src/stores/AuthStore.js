@@ -24,7 +24,7 @@ class AuthStore {
 async checkAuth() {
   this.isLoading = true;
   try {
-    const response = await fetch('/api/auth/check', { credentials: 'include' });
+    const response = await fetch('/account/check', { credentials: 'include' });
     if (response.ok) {
       const data = await response.json();
       this.isAuth = data.isAuth === true;
@@ -44,7 +44,7 @@ async checkAuth() {
     this.isLoading = true;
     this.error = '';
     try {
-      const response = await fetch(`${API_URL}/auth/login`, {
+      const response = await fetch(`${API_URL}/account/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
@@ -68,7 +68,7 @@ async checkAuth() {
     this.isLoading = true;
     this.error = '';
     try {
-      const response = await fetch(`${API_URL}/auth/register`, {
+      const response = await fetch(`${API_URL}/account/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
@@ -89,9 +89,13 @@ async checkAuth() {
     this.isLoading = true;
     this.error = "";
     try {
-      const response = await axios.put(`${API_URL}/user/${email}/password`);
+      const response = await axios.get(`${API_URL}/account/recovery/${email}`,
+        {
+            headers: { 'Content-Type': 'application/json' }
+        }
+      );
       runInAction(() => {
-        if (response.status === 200) {
+        if (response.status >= 200 && response.status < 300) {
           this.isLoading = false;
         } else {
           this.error = 'Something went wrong. Please try again.';
