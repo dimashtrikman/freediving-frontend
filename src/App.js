@@ -57,7 +57,6 @@ function App() {
         <Route path="/final-test" element={<FinalTestPage />} />
         <Route path="/marketing" element={<MarketingPage />} />
         <Route path="/static-apnea" element={<StaticApneaApp />} />
-        <Route path="/payment" element={<PaymentPage />} />
         <Route path="*" element={<NotFoundPage />} />
 
       </Routes>

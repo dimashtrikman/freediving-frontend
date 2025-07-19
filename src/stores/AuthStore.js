@@ -21,23 +21,35 @@ class AuthStore {
   this.error = null;
 }
 
-async checkAuth() {
-  this.isLoading = true;
-  try {
-    const response = await fetch('/account/check', { credentials: 'include' });
-    if (response.ok) {
-      const data = await response.json();
-      this.isAuth = data.isAuth === true;
-    } else {
-      this.isAuth = false;
+
+  async checkAuth() {
+    this.isLoading = true;
+    try {
+      const response = await fetch(`${API_URL}/account/check`, {
+        credentials: 'include',
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        runInAction(() => {
+          this.isAuth = data.isAuth === true;
+        });
+      } else {
+        runInAction(() => {
+          this.isAuth = false;
+        });
+      }
+    } catch (e) {
+      runInAction(() => {
+        this.isAuth = false;
+      });
+    } finally {
+      runInAction(() => {
+        this.isLoading = false;
+        this.isChecked = true;
+      });
     }
-  } catch (e) {
-    this.isAuth = false;
-  } finally {
-    this.isLoading = false;
-    this.isChecked = true;
   }
-}
 
 
   async login(email, password) {
@@ -48,19 +60,26 @@ async checkAuth() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
+        credentials: 'include'
       });
       const data = await response.json();
 
       if (!response.ok) throw new Error(data.message || 'Login failed');
 
       localStorage.setItem('token', data.token);
-      this.user = data.user || { email }; // Server return {user}
-      this.isAuth = true;
+      runInAction(() => {
+        this.user = data.user || { email };
+        this.isAuth = true;
+      });
     } catch (err) {
-      this.error = err.message;
-      this.isAuth = false;
+      runInAction(() => {
+        this.error = err.message;
+        this.isAuth = false;
+      });
     } finally {
-      this.isLoading = false;
+      runInAction(() => {
+        this.isLoading = false;
+      });
     }
   }
 
@@ -77,11 +96,17 @@ async checkAuth() {
 
       if (!response.ok) throw new Error(data.message || 'Registration failed');
 
-      this.isAuth = false; // Possible redirect to /login
+      runInAction(() => {
+        this.isAuth = false; // Possible redirect to /login
+      });
     } catch (err) {
-      this.error = err.message;
+      runInAction(() => {
+        this.error = err.message;
+      });
     } finally {
-      this.isLoading = false;
+      runInAction(() => {
+        this.isLoading = false;
+      });
     }
   }
 
@@ -116,8 +141,6 @@ async checkAuth() {
     this.isAuth = false;
   }
 }
-
-
 
 const authStore = new AuthStore();
 
