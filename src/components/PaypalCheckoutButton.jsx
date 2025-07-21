@@ -1,9 +1,11 @@
 import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import AuthStore from '../stores/AuthStore';
 
 export const PaypalCheckoutButton = ({ amount = '49.99' }) => {
   const paypalRef = useRef(null);
   const navigate = useNavigate();
+  const currentUser = AuthStore.user;
 
   useEffect(() => {
     let isMounted = true;
@@ -62,7 +64,8 @@ export const PaypalCheckoutButton = ({ amount = '49.99' }) => {
               body: JSON.stringify({
                 orderId: details.id,
                 payerId: data.payerID,
-                email: details.payer.email_address,
+                payerEmail: details.payer.email_address,
+                userEmail: currentUser?.email,
                 amount: details.purchase_units[0].amount.value,
                 currency: details.purchase_units[0].amount.currency_code,
               }),
@@ -103,7 +106,7 @@ export const PaypalCheckoutButton = ({ amount = '49.99' }) => {
         console.warn('PayPal cleanup error:', e);
       }
     };
-  }, [amount, navigate]);
+  }, [amount, navigate, currentUser]);
 
   return <div className="paypal-button-container" ref={paypalRef}></div>;
 };

@@ -18,23 +18,36 @@ class AuthStore {
   }
 
   clearError() {
-  this.error = null;
-}
+    this.error = null;
+  }
 
 
-  async checkAuth() {
+  async checkAuth() { 
     this.isLoading = true;
     try {
+      const token = localStorage.getItem('token');
+
       const response = await fetch(`${API_URL}/account/check`, {
         credentials: 'include',
+        headers: {
+          'Authorization': token ? `Bearer ${token}` : '',
+          'Content-Type': 'application/json',
+        },
       });
 
       if (response.ok) {
         const data = await response.json();
+
+        console.log("response.ok, User is " + this.user)
+
         runInAction(() => {
           this.isAuth = data.isAuth === true;
-          this.user = data.user ?? null;
-        });
+          if (data.user) {
+            this.user = { ...data.user, hasAccess: data.hasAccess ?? false };
+          } else {
+            this.user = null;
+          }
+      });
       } else {
         runInAction(() => {
           this.isAuth = false;
@@ -55,7 +68,11 @@ class AuthStore {
   }
 
 
+
   async login(email, password) {
+
+    console.log("User is " + this.user)
+
     this.isLoading = true;
     this.error = '';
     try {
