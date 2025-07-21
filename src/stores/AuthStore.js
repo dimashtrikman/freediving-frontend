@@ -13,7 +13,7 @@ class AuthStore {
     makeAutoObservable(this);
     const token = localStorage.getItem('token');
     if (token) {
-      this.isAuth = true;
+      this.checkAuth();
     }
   }
 
@@ -33,15 +33,18 @@ class AuthStore {
         const data = await response.json();
         runInAction(() => {
           this.isAuth = data.isAuth === true;
+          this.user = data.user ?? null;
         });
       } else {
         runInAction(() => {
           this.isAuth = false;
+          this.user = null;
         });
       }
     } catch (e) {
       runInAction(() => {
         this.isAuth = false;
+        this.user = null;
       });
     } finally {
       runInAction(() => {
