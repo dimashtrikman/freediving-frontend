@@ -12,7 +12,7 @@ export const LoginPage = observer(() => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await AuthStore.login(email, password);
-    if (AuthStore.isAuth) navigate('/dashboard');
+    if (AuthStore.isAuth) navigate('/demo');
   };
 
   return (

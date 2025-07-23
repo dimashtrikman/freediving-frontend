@@ -35,40 +35,80 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/reset-password" element={<ResetPasswordPage />} />
-        <Route path="/demo" element={<DemoAccessPage />} />
+        <Route path="/demo" 
+          element={
+            <PrivateRoute>
+              <DemoAccessPage />
+            </PrivateRoute>
+          } 
+        />
+        <Route
+          path="/payment"
+          element={
+            <PrivateRoute>
+              <PaymentPage />
+            </PrivateRoute>
+          }
+        />
         <Route
           path="/dashboard"
           element={
-            <PrivateRoute>
+            <PrivateRoute requireAccess={true}>
               <DashboardPage />
             </PrivateRoute>
           }
         />
         <Route
-          path="/payment"
+          path="/lessons"
           element={
-           <PrivateRoute>
-              <PaymentPage />
-           </PrivateRoute>
-          }
-        />
-        <Route path="/lessons" element={<LessonsPage />} />
-        <Route path="/lesson/:id" element={<LessonPage />} />
-        <Route path="/quiz/:id" element={<QuizPage />} />
-        <Route path="/final-test" element={<FinalTestPage />} />
-        <Route path="/marketing" element={<MarketingPage />} />
-        <Route path="/static-apnea" element={<StaticApneaApp />} />
-        <Route
-          path="/forum"
-          element={
-            <PrivateRoute>
-              <Forum />
+            <PrivateRoute requireAccess={true}>
+              <LessonsPage />
             </PrivateRoute>
           }
         />
-        <Route path="/payment" element={<PaymentPage />} />
-        <Route path="*" element={<NotFoundPage />} />
-
+        <Route
+          path="/lesson/:id"
+          element={
+            <PrivateRoute requireAccess={true}>
+              <LessonPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/quiz/:id"
+          element={
+            <PrivateRoute requireAccess={true}>
+              <QuizPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/final-test"
+          element={
+            <PrivateRoute requireAccess={true}>
+              <FinalTestPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/marketing"
+          element={
+            <PrivateRoute requireAccess={true}>
+              <MarketingPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/static-apnea"
+          element={
+            <PrivateRoute requireAccess={true}>
+              <StaticApneaApp />
+            </PrivateRoute>
+          }
+        />
+        <Route path="*" element={
+          <NotFoundPage />
+        } />
       </Routes>
     </div>
   );

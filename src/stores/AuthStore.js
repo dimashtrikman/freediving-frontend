@@ -13,34 +13,66 @@ class AuthStore {
     makeAutoObservable(this);
     const token = localStorage.getItem('token');
     if (token) {
-      this.isAuth = true;
+      this.checkAuth();
     }
   }
 
   clearError() {
-  this.error = null;
-}
-
-async checkAuth() {
-  this.isLoading = true;
-  try {
-    const response = await fetch('/account/check', { credentials: 'include' });
-    if (response.ok) {
-      const data = await response.json();
-      this.isAuth = data.isAuth === true;
-    } else {
-      this.isAuth = false;
-    }
-  } catch (e) {
-    this.isAuth = false;
-  } finally {
-    this.isLoading = false;
-    this.isChecked = true;
+    this.error = null;
   }
-}
+
+
+  async checkAuth() { 
+    this.isLoading = true;
+    try {
+      const token = localStorage.getItem('token');
+
+      const response = await fetch(`${API_URL}/account/check`, {
+        credentials: 'include',
+        headers: {
+          'Authorization': token ? `Bearer ${token}` : '',
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+
+        console.log("response.ok, User is " + this.user)
+
+        runInAction(() => {
+          this.isAuth = data.isAuth === true;
+          if (data.user) {
+            this.user = { ...data.user, hasAccess: data.hasAccess ?? false };
+          } else {
+            this.user = null;
+          }
+      });
+      } else {
+        runInAction(() => {
+          this.isAuth = false;
+          this.user = null;
+        });
+      }
+    } catch (e) {
+      runInAction(() => {
+        this.isAuth = false;
+        this.user = null;
+      });
+    } finally {
+      runInAction(() => {
+        this.isLoading = false;
+        this.isChecked = true;
+      });
+    }
+  }
+
 
 
   async login(email, password) {
+
+    console.log("User is " + this.user)
+
     this.isLoading = true;
     this.error = '';
     try {
@@ -48,19 +80,26 @@ async checkAuth() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
+        credentials: 'include'
       });
       const data = await response.json();
 
       if (!response.ok) throw new Error(data.message || 'Login failed');
 
       localStorage.setItem('token', data.token);
-      this.user = data.user || { email }; // Server return {user}
-      this.isAuth = true;
+      runInAction(() => {
+        this.user = data.user || { email };
+        this.isAuth = true;
+      });
     } catch (err) {
-      this.error = err.message;
-      this.isAuth = false;
+      runInAction(() => {
+        this.error = err.message;
+        this.isAuth = false;
+      });
     } finally {
-      this.isLoading = false;
+      runInAction(() => {
+        this.isLoading = false;
+      });
     }
   }
 
@@ -77,11 +116,17 @@ async checkAuth() {
 
       if (!response.ok) throw new Error(data.message || 'Registration failed');
 
-      this.isAuth = false; // Possible redirect to /login
+      runInAction(() => {
+        this.isAuth = false; // Possible redirect to /login
+      });
     } catch (err) {
-      this.error = err.message;
+      runInAction(() => {
+        this.error = err.message;
+      });
     } finally {
-      this.isLoading = false;
+      runInAction(() => {
+        this.isLoading = false;
+      });
     }
   }
 
@@ -116,8 +161,6 @@ async checkAuth() {
     this.isAuth = false;
   }
 }
-
-
 
 const authStore = new AuthStore();
 
