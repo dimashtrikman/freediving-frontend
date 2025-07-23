@@ -290,6 +290,23 @@ h1 {
   background-color: #f0f0f0;
 }
 
+.user-status {
+  position: absolute;
+  top: 12px;
+  right: 90px;
+  font-size: 14px;
+  color: #444;
+}
+
+.logout-button {
+  cursor: pointer;
+  margin-top: 10px;
+  background: none;
+  border: none;
+  color: red;
+  font-weight: bold;
+}
+
 
   /* ----------------------------------------------------------------------- */
   /* PaymentPage */

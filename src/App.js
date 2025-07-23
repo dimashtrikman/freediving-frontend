@@ -54,7 +54,7 @@ function App() {
           path="/dashboard"
           element={
             <PrivateRoute requireAccess={true}>
-              <DashboardPage />
+              <DashboardPage component={<Forum />}/>
             </PrivateRoute>
           }
         />

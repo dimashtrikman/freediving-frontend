@@ -69,7 +69,10 @@ export const PaypalCheckoutButton = ({ amount = '49.99' }) => {
                 amount: details.purchase_units[0].amount.value,
                 currency: details.purchase_units[0].amount.currency_code,
               }),
-            })
+            })              
+              .then(() => {
+                return AuthStore.checkAuth();
+              })
               .then(() => {
                 if (isMounted) navigate('/dashboard');
               })

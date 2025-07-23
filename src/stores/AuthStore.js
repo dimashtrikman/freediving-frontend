@@ -26,28 +26,36 @@ class AuthStore {
     this.isLoading = true;
     try {
       const token = localStorage.getItem('token');
-
+      if (!token || token === 'undefined') {
+        localStorage.removeItem('token');
+        this.isAuth = false;
+        this.user = null;
+        return;
+      }
       const response = await fetch(`${API_URL}/account/check`, {
         credentials: 'include',
         headers: {
-          'Authorization': token ? `Bearer ${token}` : '',
+          'Authorization': token || '',
           'Content-Type': 'application/json',
         },
       });
 
       if (response.ok) {
         const data = await response.json();
-
-        console.log("response.ok, User is " + this.user)
-
         runInAction(() => {
           this.isAuth = data.isAuth === true;
-          if (data.user) {
-            this.user = { ...data.user, hasAccess: data.hasAccess ?? false };
-          } else {
+        if (data.userDto) {
+          this.user = { ...data.userDto, hasAccess: data.hasAccess ?? false };
+        }  else {
             this.user = null;
           }
       });
+      } else if (response.status === 403) {
+        const data = await response.json();
+        runInAction(() => {
+          this.isAuth = true;
+          this.user = { email: data.userDto.email, hasAccess: false };
+        });
       } else {
         runInAction(() => {
           this.isAuth = false;
@@ -67,12 +75,7 @@ class AuthStore {
     }
   }
 
-
-
   async login(email, password) {
-
-    console.log("User is " + this.user)
-
     this.isLoading = true;
     this.error = '';
     try {
@@ -82,20 +85,32 @@ class AuthStore {
         body: JSON.stringify({ email, password }),
         credentials: 'include'
       });
+
       const data = await response.json();
 
       if (!response.ok) throw new Error(data.message || 'Login failed');
 
-      localStorage.setItem('token', data.token);
+      if (data.token && data.token !== 'undefined') {
+        localStorage.setItem('token', `Bearer ${data.token}`);
+      } else {
+        localStorage.removeItem('token');
+        throw new Error('Invalid token received from server');
+      }
+
       runInAction(() => {
-        this.user = data.user || { email };
+        this.user = data.userDto || { email };
         this.isAuth = true;
       });
+
+      await this.checkAuth();
+
     } catch (err) {
       runInAction(() => {
         this.error = err.message;
         this.isAuth = false;
+        this.user = null;
       });
+      localStorage.removeItem('token'); 
     } finally {
       runInAction(() => {
         this.isLoading = false;

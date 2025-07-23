@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
-import { Link, useNavigate  } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { observer } from 'mobx-react-lite';
+import AuthStore from '../stores/AuthStore';
 
-const Header = () => {
+const Header = observer(() => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const authStore = AuthStore;
+  const navigate = useNavigate();
 
   const toggleMenu = () => setMenuOpen(prev => !prev);
 
-  const navigate = useNavigate();
-
   const handleLogout = () => {
-    // Удаляем токен из localStorage
-    localStorage.removeItem('token');
+    authStore?.logout();
     setMenuOpen(false);
-    // Перенаправляем на главную или страницу логина
     navigate('/');
   };
 
@@ -21,6 +21,13 @@ const Header = () => {
       <Link to="/" className="header-link">
         Freediving course
       </Link>
+
+      {authStore?.isAuth && authStore.user && (
+        <div className="user-status">
+          👤 {authStore.user.email} |{" "}
+          {authStore.user.hasAccess ? "✅ Доступ оплачен" : "⛔ Без доступа"}
+        </div>
+      )}
 
       <div className="burger-container">
         <button className="burger" onClick={toggleMenu}>
@@ -37,18 +44,20 @@ const Header = () => {
             <Link to="/final-test" onClick={() => setMenuOpen(false)}>Final Test</Link>
             <Link to="/marketing" onClick={() => setMenuOpen(false)}>Marketing</Link>
             <Link to="/static-apnea" onClick={() => setMenuOpen(false)}>Static Apnea</Link>
-            <button
-              onClick={handleLogout}
-              className="logout-button"
-              style={{ cursor: 'pointer', marginTop: '10px', background: 'none', border: 'none', color: 'red' }}
-            >
-              Log Out
-            </button>
+
+            {authStore?.isAuth && (
+              <button
+                onClick={handleLogout}
+                className="logout-button"
+              >
+                Log Out
+              </button>
+            )}
           </nav>
         )}
       </div>
     </header>
   );
-};
+});
 
 export default Header;
