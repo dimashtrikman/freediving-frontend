@@ -17,6 +17,7 @@ import {PaymentPage} from './pages/Payment/PaymentPage';
 import {NotFoundPage} from './pages/NotFoundPage';
 import ResetPasswordPage from './pages/Auth/ResetPasswordPage';
 import PrivateRoute from './components/PrivateRoute';
+import Forum from './components/Forum';
 
 
 function App() {
@@ -57,6 +58,14 @@ function App() {
         <Route path="/final-test" element={<FinalTestPage />} />
         <Route path="/marketing" element={<MarketingPage />} />
         <Route path="/static-apnea" element={<StaticApneaApp />} />
+        <Route
+          path="/forum"
+          element={
+            <PrivateRoute>
+              <Forum />
+            </PrivateRoute>
+          }
+        />
         <Route path="/payment" element={<PaymentPage />} />
         <Route path="*" element={<NotFoundPage />} />
 
