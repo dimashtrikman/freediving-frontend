@@ -27,17 +27,17 @@ jobs:
         cache-dependency-path: package-lock.json
         
     - name: Install dependencies
-      working-directory: ./freediving-frontend
+      working-directory: ./
       run: npm ci
       
     - name: Create environment file
-      working-directory: ./freediving-frontend
+      working-directory: ./
       run: |
         echo "REACT_APP_SERVER_API_URL=${{ secrets.REACT_APP_SERVER_API_URL }}" > .env
         echo "REACT_APP_ENVIRONMENT=production" >> .env
         
     - name: Build application
-      working-directory: ./freediving-frontend
+      working-directory: ./
       run: npm run build
       
     - name: Configure AWS credentials
