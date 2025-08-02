@@ -24,7 +24,7 @@ jobs:
       with:
         node-version: '18'
         cache: 'npm'
-        cache-dependency-path: freediving-frontend/package-lock.json
+        cache-dependency-path: package-lock.json
         
     - name: Install dependencies
       working-directory: ./freediving-frontend
