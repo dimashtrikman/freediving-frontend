@@ -1,0 +1,24 @@
+{
+  "s3": {
+    "bucketName": "your-freediving-frontend-bucket",
+    "region": "us-east-1",
+    "websiteConfiguration": {
+      "indexDocument": "index.html",
+      "errorDocument": "index.html"
+    }
+  },
+  "cloudfront": {
+    "distributionId": "your-cloudfront-distribution-id",
+    "domainName": "your-cloudfront-domain.cloudfront.net"
+  },
+  "environment": {
+    "production": {
+      "REACT_APP_SERVER_API_URL": "http://13.61.24.49:8080",
+      "REACT_APP_ENVIRONMENT": "production"
+    },
+    "staging": {
+      "REACT_APP_SERVER_API_URL": "http://13.61.24.49:8080",
+      "REACT_APP_ENVIRONMENT": "staging"
+    }
+  }
+} 
