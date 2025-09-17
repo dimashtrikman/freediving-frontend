@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import AuthStore from '../stores/AuthStore';
 
-const API_URL = process.env.REACT_APP_SERVER_API_URL || 'http://localhost:8080';
+const API_URL = process.env.REACT_APP_SERVER_API_URL;
 
 const Forum = () => {
   const [messages, setMessages] = useState([]);
