@@ -1,5 +1,7 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import axios from "axios";
+// import { API_URL } from "../utils/global";
+
 const API_URL = process.env.REACT_APP_SERVER_API_URL;
 
 class AuthStore {
