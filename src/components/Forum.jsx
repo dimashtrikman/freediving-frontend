@@ -14,23 +14,46 @@ const Forum = () => {
   const [customAuthor, setCustomAuthor] = useState('');
   const author = isAdmin ? (customAuthor || AuthStore.user?.email || AuthStore.user?.username || '') : (AuthStore.user?.email || AuthStore.user?.username || '');
 
+  function renderMessages(messages) {
+    return messages
+      .sort((a, b) => new Date(b.dateCreated) - new Date(a.dateCreated))
+      .map((msg, idx) => {
+        const date = new Date(msg.dateCreated);
+        const formattedDate = date.toLocaleDateString();
+        const formattedTime = date.toLocaleTimeString();
+        const content = msg.content || "(empty)";
+
+      return (
+        <div key={msg.id || idx} style={{ marginBottom: 12, textAlign: 'left' }}>
+          <div style={{ fontSize: '0.85em', fontStyle: 'italic', color: '#555' }}>
+            {formattedDate} {formattedTime}
+          </div>
+          <div style={{ fontWeight: 'bold', fontSize: '1em' }}>
+            {content}
+          </div>
+        </div>
+      );
+    });
+  }
+
   const fetchMessages = useCallback(async () => {
     setLoading(true);
     setError('');
     try {
       // Fetch all posts for this user (or all, if you update backend)
-      const res = await fetch(`${API_URL}/forum/posts/author/${author}`, {
+      const res = await fetch(`${API_URL}/forum/posts/author`, {
         credentials: 'include',
       });
       if (!res.ok) throw new Error('Failed to fetch messages');
       const data = await res.json();
-      setMessages(Array.isArray(data) ? data : []);
+      setMessages(Array.isArray(data) ? data: []);
+
     } catch (err) {
       setError(err.message);
     } finally {
       setLoading(false);
     }
-  }, [author]);
+  }, []);
 
   useEffect(() => {
     if (author) fetchMessages();
@@ -46,7 +69,7 @@ const Forum = () => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
-        body: JSON.stringify({ text: input }),
+        body: JSON.stringify({ content: input }),
       });
       if (!res.ok) throw new Error('Failed to send message');
       setInput('');
@@ -81,15 +104,12 @@ const Forum = () => {
           <div>Loading...</div>
         ) : (
           messages.length > 0 ? (
-            messages.map((msg, idx) => (
-              <div key={idx} style={{ marginBottom: 8 }}>
-                <b>{msg.author || author}:</b> {msg.text || msg.message}
-              </div>
-            ))
+            renderMessages(messages)
           ) : (
             <div>No messages yet.</div>
           )
-        )}
+              )
+              }
       </div>
       <form onSubmit={handleSend} style={{ display: 'flex', gap: 8 }}>
         <input
