@@ -75,7 +75,7 @@ Add the following secrets to your GitHub repository:
    - `AWS_SECRET_ACCESS_KEY`: Your AWS secret key
    - `S3_BUCKET`: Your S3 bucket name
    - `CLOUDFRONT_DISTRIBUTION_ID`: Your CloudFront distribution ID
-   - `REACT_APP_SERVER_API_URL`: Your backend API URL (http://13.61.24.49:8080)
+   - `REACT_APP_SERVER_API_URL`: Your backend API URL (https://api.freediving-course.com)
 
 ## Deployment Methods
 
@@ -116,7 +116,7 @@ The application uses environment variables for configuration:
 Edit `src/utils/global.js` to change the backend URL:
 
 ```javascript
-export const API_URL = process.env.REACT_APP_SERVER_API_URL || "http://13.61.24.49:8080";
+export const API_URL = process.env.REACT_APP_SERVER_API_URL || "https://api.freediving-course.com";
 ```
 
 ### Update AWS Configuration

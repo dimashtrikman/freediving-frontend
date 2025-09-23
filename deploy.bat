@@ -28,15 +28,15 @@ call npm ci
 
 echo 🔧 Creating environment file...
 if "%ENVIRONMENT%"=="production" (
-    echo REACT_APP_SERVER_API_URL=http://13.61.24.49:8080 > .env
+    echo REACT_APP_SERVER_API_URL=https://api.freediving-course.com > .env
     echo REACT_APP_ENVIRONMENT=production >> .env
-    set S3_BUCKET=your-freediving-frontend-bucket
-    set CLOUDFRONT_ID=your-cloudfront-distribution-id
+    set S3_BUCKET=freediving-front
+    set CLOUDFRONT_ID=E3OJ4ZBFDQY3J1
 ) else (
-    echo REACT_APP_SERVER_API_URL=http://13.61.24.49:8080 > .env
+    echo REACT_APP_SERVER_API_URL=https://api.freediving-course.com > .env
     echo REACT_APP_ENVIRONMENT=staging >> .env
-    set S3_BUCKET=your-freediving-frontend-staging-bucket
-    set CLOUDFRONT_ID=your-cloudfront-staging-distribution-id
+    set S3_BUCKET=freediving-front-staging
+    set CLOUDFRONT_ID=E3OJ4ZBFDQY3J1
 )
 
 echo 🏗️ Building application...
