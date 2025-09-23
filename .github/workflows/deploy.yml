@@ -33,7 +33,7 @@ jobs:
     - name: Create environment file
       working-directory: ./
       run: |
-        echo "REACT_APP_SERVER_API_URL=${{ secrets.REACT_APP_SERVER_API_URL }}" > .env
+        echo "REACT_APP_SERVER_API_URL=https://api.freediving-course.com" > .env
         echo "REACT_APP_ENVIRONMENT=production" >> .env
         
     - name: Build application
@@ -60,4 +60,3 @@ jobs:
           
     - name: Deploy status
       run: echo "Deployment completed successfully!" 
-      
