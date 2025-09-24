@@ -17,6 +17,8 @@ export const LoginPage = observer(() => {
 
   return (
     <>
+    <title>Login — Freediving</title>
+    <meta name="robots" content="noindex, nofollow" />
     <Header />
     <div className="register-container">
       <h2>Sign In</h2>
