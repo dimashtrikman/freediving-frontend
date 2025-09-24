@@ -2,9 +2,9 @@ name: Deploy to AWS
 
 on:
   push:
-    branches: [ gerlbranch ]
+    branches: [ main ]
   pull_request:
-    branches: [ gerlbranch ]
+    branches: [ main ]
 
 env:
   AWS_REGION: eu-north-1
