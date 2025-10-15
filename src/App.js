@@ -62,7 +62,7 @@ function App() {
           path="/lessons"
           element={
             <PrivateRoute requireAccess={true}>
-              <LessonsPage />
+              <LessonsPage component={<LessonPage />}/>
             </PrivateRoute>
           }
         />
