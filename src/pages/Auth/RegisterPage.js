@@ -27,6 +27,8 @@ export const RegisterPage = observer(() => {
 
   return (
     <>
+    <title>Register — Freediving</title>
+    <meta name="robots" content="noindex, nofollow" />
     <Header />
     <div className="register-container">
       <h2>Create an Account</h2>

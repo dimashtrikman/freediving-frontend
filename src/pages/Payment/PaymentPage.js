@@ -7,6 +7,8 @@ export const PaymentPage = () => {
 
   return (
     <>
+    <title>Payments — Freediving</title>
+    <meta name="robots" content="noindex, nofollow" />
     <Header />
     <div className="payment-container">
       <h1 className="payment-title">Курс по фридайвингу</h1>

@@ -1,0 +1,24 @@
+{
+  "s3": {
+    "bucketName": "freediving-front",
+    "region": "eu-north-1",
+    "websiteConfiguration": {
+      "indexDocument": "index.html",
+      "errorDocument": "index.html"
+    }
+  },
+  "cloudfront": {
+    "distributionId": "E3OJ4ZBFDQY3J1",
+    "domainName": "d2qx2by9g05umu.cloudfront.net"
+  },
+  "environment": {
+    "production": {
+      "REACT_APP_SERVER_API_URL": "https://api.freediving-course.com",
+      "REACT_APP_ENVIRONMENT": "production"
+    },
+    "staging": {
+      "REACT_APP_SERVER_API_URL": "https://api.freediving-course.com",
+      "REACT_APP_ENVIRONMENT": "staging"
+    }
+  }
+} 

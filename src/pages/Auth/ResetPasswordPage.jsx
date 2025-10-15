@@ -18,6 +18,8 @@ const ResetPasswordPage = observer(() => {
 
   return (
     <>
+    <title>Recovery password — Freediving</title>
+    <meta name="robots" content="noindex, nofollow" />
     <Header />
     <div className="reset-container">
       <h2>Reset Password</h2>
