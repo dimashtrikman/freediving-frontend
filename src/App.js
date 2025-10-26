@@ -18,6 +18,8 @@ import {NotFoundPage} from './pages/NotFoundPage';
 import ResetPasswordPage from './pages/Auth/ResetPasswordPage';
 import PrivateRoute from './components/PrivateRoute';
 import Forum from './components/Forum';
+import Messenger from './pages/Messenger/Messenger';
+
 
 
 function App() {
@@ -103,6 +105,14 @@ function App() {
           element={
             <PrivateRoute requireAccess={true}>
               <StaticApneaApp />
+            </PrivateRoute>
+          }
+        />
+                <Route
+          path="/messenger"
+          element={
+            <PrivateRoute requireAccess={true}>
+              <Messenger />
             </PrivateRoute>
           }
         />

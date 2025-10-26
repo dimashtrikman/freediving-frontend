@@ -44,6 +44,7 @@ const Header = observer(() => {
             <Link to="/final-test" onClick={() => setMenuOpen(false)}>Final Test</Link>
             <Link to="/marketing" onClick={() => setMenuOpen(false)}>Marketing</Link>
             <Link to="/static-apnea" onClick={() => setMenuOpen(false)}>Static Apnea</Link>
+            <Link to="/messenger" onClick={() => setMenuOpen(false)}>Meesenger</Link>
 
             {authStore?.isAuth && (
               <button
