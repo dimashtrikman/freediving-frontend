@@ -4,7 +4,7 @@
 
 body {
   font-family: Arial, sans-serif;
-  background-color: #f0f2f5;
+  background-color: #a1a1a1;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -12,7 +12,7 @@ body {
 }
 
 h1 {
-  color: dodgerblue;
+  color: #EBF0F3;
 }
 
 /* ----------------------------------------------------------------------- */
@@ -291,11 +291,11 @@ h1 {
 }
 
 .user-status {
-  position: absolute;
-  top: 12px;
-  right: 90px;
+  position: fixed;
+  top: 90px;
+  right: 70px;
   font-size: 14px;
-  color: #444;
+  color: #ffffff;
 }
 
 .logout-button {
@@ -359,8 +359,6 @@ h1 {
 /* Messenger */
 
 /* ChatPage.css */
-/* Док: отдельный CSS-файл (как просил). BEM-нейминг, минималистичный вид.
-   Светлая тема по умолчанию. Можно добавить [data-theme="dark"] при желании. */
 
 :root {
   --bg: #f7f8fa;

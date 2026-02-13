@@ -41,7 +41,6 @@ class AuthStore {
           'Content-Type': 'application/json',
         },
       });
-
       if (response.ok) {
         const data = await response.json();
         runInAction(() => {

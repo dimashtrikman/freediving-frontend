@@ -1,4 +1,5 @@
 import './App.css';
+import './style.css';
 import { useEffect } from 'react';
 import AuthStore from './stores/AuthStore';
 import { Route, Routes, useLocation } from 'react-router-dom';

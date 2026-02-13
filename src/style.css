@@ -1,0 +1,356 @@
+:root {
+  --hero-bg-image: url("/src/assets/summertime-background.png"); 
+  --hero-overlay-left: rgba(0, 0, 0, 0.7);
+  --hero-overlay-right: rgba(0, 0, 0, 0.25);
+  --accent-green: #2CEE78;        
+  --text-main: #ffffff;
+  --text-muted: rgba(255, 255, 255, 0.8);
+  --text-soft: rgba(255, 255, 255, 0.6);
+  --font-main: "Inter", system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+  --font-accent: "Bebas Neue", sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.hero {
+  position: relative;
+  min-height: 100vh;
+  padding: 32px 80px 72px;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+
+  background-image: linear-gradient(
+      to right,
+      var(--hero-overlay-left),
+      var(--hero-overlay-right)
+    ),
+    var(--hero-bg-image);
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+}
+
+
+/* HEADER */
+
+.hero__header {
+  
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  font-size: 14px;
+}
+
+.hero__logo {
+  color: var(--text-main);
+  font: var(--font-main); 
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0px;
+}
+
+.hero__logo-top {
+  font-size: 6.74px;
+  line-height: 1.4;
+  opacity: 1;
+  margin: 0;
+}
+
+.hero__logo-bottom {
+  text-transform: uppercase;
+  font-size: 10.79px;
+  line-height: 1.4;
+  opacity: 1;
+  margin: 0;
+}
+
+.hero__nav {
+  display: flex;
+  gap: 24px;
+  margin-left: 40px;
+  font-size: 14px;
+
+}
+
+.hero__nav a {
+  text-decoration: none;
+  color: var(--text-soft);
+  position: relative;
+}
+
+.hero__nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0;
+  height: 1px;
+  background-color: var(--text-main);
+  transition: width 0.2s ease-out;
+}
+
+.hero__nav a:hover::after {
+  width: 100%;
+}
+
+.hero__controls {
+  display: flex;
+  margin-left: auto;
+  align-items: center;
+  gap: 24px;
+  font-size: 13px;
+}
+
+.hero__lang {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.lang {
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--text-soft);
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  cursor: pointer;
+}
+
+.lang--active {
+  color: var(--text-main);
+}
+
+.hero__login {
+  /* text-decoration: underline; */
+  color: var(--text-main);
+  font-size: 13px;
+}
+
+.nav-link {
+  background: none;
+  border: none;
+  color: var(--text-main);
+  cursor: pointer;
+  font: inherit;
+  padding: 0;
+}
+
+.hero__header button {
+  /* display: inline-block; */
+  /* transition: transform 0.2s ease, color 0.2s ease; */
+  /* will-change: transform; */
+  background: linear-gradient(currentColor 0 0) left bottom / 0 2px no-repeat;
+  transition: background-size 0.3s ease;
+}
+
+.hero__header button:hover {
+  /* transform: scale(1.05) translateY(-2px); */
+  background-size: 100% 2px;  
+}
+
+
+
+/* CONTENT */
+
+.hero__content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 40px;
+  margin-top: 40px;
+  width: 100%;
+}
+
+
+.hero__left {
+  position: relative;
+  max-width: 720px;
+  padding-top: 40px;
+}
+
+.hero__title {
+  font-family: var(--font-accent);
+  font-size: 90px;
+  line-height: 1.1;
+  text-transform: uppercase;
+  font-weight: 800;
+  letter-spacing: -1%;
+  margin: 0 0 18px;
+}
+
+.hero__description {
+  display: flex;
+  flex-direction: column;
+  color: var(--text-main);
+  max-width: 140px;
+}
+
+.hero__description span {
+  display: block;
+}
+
+.hero__description span + span {
+  margin-top: 16px;
+}
+
+.hero__circle {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  pointer-events: none;
+}
+
+.hero__circle--outer {
+  width: 705px;
+  height: 705px;
+  top: -275px;
+  left: -225px;
+}
+
+.hero__circle--inner {
+  width: 602px;
+  height: 602px;
+  top: -225px;
+  left: -175px;
+  border-color: rgba(255, 255, 255, 0.3);
+  border-style: dashed;
+}
+
+.hero__content__block {
+  text-align: left;
+}
+
+.hero__right {
+  max-width: 280px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-soft);
+}
+
+/* CTA */
+
+.hero__cta-wrapper {
+  margin-top: 60px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; 
+  text-align: left;        
+  gap: 10px;               
+}
+
+.hero__cta {
+  width: min(490px, 90%);
+  aspect-ratio: 490 / 130;
+  height: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  font-family: var(--font-accent);
+  background-color: var(--accent-green);
+  color: #000;
+  text-decoration: none;
+  font-size: 25px;
+  text-transform: uppercase;
+  letter-spacing: 0;
+  transition: transform 0.15s ease-out, box-shadow 0.15s ease-out,
+    background-color 0.15s ease-out;
+}
+
+.hero__cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+  background-color: #74c48a;
+}
+
+.hero__subtitle {
+  margin: 0;
+  font-size: 30px;
+  color: var(--text-muted);
+  letter-spacing: -3%;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 1024px) {
+  .hero {
+    padding: 24px 32px 48px;
+  }
+
+  .hero__content {
+    align-items: flex-start;
+  }
+
+  .hero__title {
+    text-transform: uppercase;
+    font-size: 40px;
+  }
+
+  .hero__circle--outer {
+    width: 420px;
+    height: 420px;
+    top: -200px;
+    left: -230px;
+  }
+
+  .hero__circle--inner {
+    width: 320px;
+    height: 320px;
+    top: -140px;
+    left: -180px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding: 20px 20px 40px;
+  }
+
+  .hero__header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .hero__nav {
+    gap: 20px;
+    font-size: 13px;
+  }
+
+  .hero__content {
+    flex-direction: column;
+    gap: 32px;
+    margin-top: 32px;
+  }
+
+  .hero__left {
+    padding-left: 8px;
+  }
+
+  .hero__title {
+    font-size: 34px;
+  }
+
+  .hero__right {
+    max-width: 100%;
+  }
+
+  .hero__cta-wrapper {
+    margin-top: 32px;
+  }
+
+  .hero__circle--outer,
+  .hero__circle--inner {
+    opacity: 0.3;
+  }
+}
